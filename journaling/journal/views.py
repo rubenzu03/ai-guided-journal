@@ -10,5 +10,5 @@ def home(request):
         Entry.objects.create(text=text)
         return redirect("home")
     entries = Entry.objects.all().order_by("-created_at")
-    return render(request, "journal/home.html", {"entries": entries})
+    return render(request, "home.html", {"entries": entries})
 
