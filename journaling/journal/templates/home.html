@@ -4,38 +4,52 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>AI Guided Journal</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <div class="header">
-            <h1>AI Guided Journal</h1>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>AI Guided Journal</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <div class="header">
+      <h1>AI Guided Journal</h1>
+    </div>
+    <div class="journal-form">
+      <form method="post">
+        {% csrf_token %}
+        <textarea
+          name="text"
+          placeholder="Write your journal entry..."
+        ></textarea
+        ><br />
+        <button type="submit">Save</button>
+      </form>
+    </div>
+    <div class="entries">
+      <h2>Previous Entries</h2>
+      <li>
+        {% for entry in entries %}
+        <div class="entry">
+          <p>{{ entry.text }}</p>
+          <small>Created at: {{ entry.created_at }}</small>
+          <small>Last updated: {{ entry.updated_at }}</small>
+          {% if entry.ai_analysis %}
+            <p>AI Analysis: {{ entry.ai_analysis }}</p>
+          {% endif %}
         </div>
-        <div class="journal-form"></div>
-            <form method="post">
-                {% csrf_token %}
-                <textarea name="text" placeholder="Write your journal entry..."></textarea><br>
-                <button type="submit">Save</button>
-            </form>
-        </div>
-        <div class="entries">
-            <h2>Previous Entries</h2>
-            {% for entry in entries %}
-                <div class="entry">
-                    <p>{{ entry.text }}</p>
-                    <small>Created at: {{ entry.created_at }}</small>
-                </div>
-            {% empty %}
-                <p>No entries yet.</p>
-            {% endfor %}
-        <script src="" async defer></script>
-    </body>
+        {% empty %}
+        <p>No entries yet.</p>
+        {% endfor %}
+      </li>
+    </div>
+    <script src="" async defer></script>
+  </body>
 </html>
