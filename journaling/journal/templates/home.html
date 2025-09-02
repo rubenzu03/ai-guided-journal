@@ -5,12 +5,13 @@
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
   <head>
+    {% load static %}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>AI Guided Journal</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="" />
+    <link rel="stylesheet" href="{% static 'journal/css/styles.css' %}" />
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -19,8 +20,8 @@
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
     <![endif]-->
-    <div class="header">
-      <h1>AI Guided Journal</h1>
+    <div class="banner">
+      <h1 id="banner-title">AI Guided Journal</h1>
     </div>
     <div class="journal-form">
       <form method="post">
@@ -35,20 +36,20 @@
     </div>
     <div class="entries">
       <h2>Previous Entries</h2>
-      <li>
+      <ul class="entries-list">
         {% for entry in entries %}
-        <div class="entry">
+        <li class="entry">
           <p>{{ entry.text }}</p>
           <small>Created at: {{ entry.created_at }}</small>
           <small>Last updated: {{ entry.updated_at }}</small>
           {% if entry.ai_analysis %}
             <p>AI Analysis: {{ entry.ai_analysis }}</p>
           {% endif %}
-        </div>
+        </li>
         {% empty %}
-        <p>No entries yet.</p>
+        <li class="no-entries">No entries yet.</li>
         {% endfor %}
-      </li>
+      </ul>
     </div>
     <script src="" async defer></script>
   </body>
