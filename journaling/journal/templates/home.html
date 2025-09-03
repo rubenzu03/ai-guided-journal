@@ -26,12 +26,12 @@
     <div class="journal-form">
       <form method="post">
         {% csrf_token %}
-        <textarea
+        <textarea id="journal-input"
           name="text"
           placeholder="Write your journal entry..."
         ></textarea
         ><br />
-        <button type="submit">Save</button>
+        <button id="submit_bt" type="submit">Save</button>
       </form>
     </div>
     <div class="entries">
