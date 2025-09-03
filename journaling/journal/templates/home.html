@@ -23,6 +23,10 @@
     <div class="banner">
       <h1 id="banner-title">AI Guided Journal</h1>
     </div>
+    <div class="date-and-time">
+      <h1 id="current-date">Date Placeholder</h1>
+      <h2 id="current-time">Time Placeholder</h2>
+    </div>
     <div class="journal-form">
       <form method="post">
         {% csrf_token %}
@@ -51,6 +55,7 @@
         {% endfor %}
       </ul>
     </div>
+    <script src="{% static 'journal/js/dateAndTime.js' %}"></script>
     <script src="" async defer></script>
   </body>
 </html>
