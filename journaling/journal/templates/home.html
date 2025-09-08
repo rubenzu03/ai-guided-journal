@@ -11,7 +11,7 @@
     <title>AI Guided Journal</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{% static 'journal/css/styles.css' %}" />
+    <link rel="stylesheet" href="{% static 'journal/css/home.css' %}" />
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -23,9 +23,13 @@
     <div class="banner">
       <h1 id="banner-title">AI Guided Journal</h1>
     </div>
-    <div class="date-and-time">
-      <h1 id="current-date">Date Placeholder</h1>
-      <h2 id="current-time">Time Placeholder</h2>
+    <div class="currentDate">
+      <h1 id="today-text" class="title">Today, it's:</h1>
+      <h2 id="current-date">Date Placeholder</h2>
+    </div>
+    <div class="currentTime">
+      <h3 class="title">Current Time:</h3>
+      <h3 id="current-time">Time Placeholder</h3>
     </div>
     <div class="journal-form">
       <form method="post">
@@ -38,23 +42,7 @@
         <button id="submit_bt" type="submit">Save</button>
       </form>
     </div>
-    <div class="entries">
-      <h2>Previous Entries</h2>
-      <ul class="entries-list">
-        {% for entry in entries %}
-        <li class="entry">
-          <p>{{ entry.text }}</p>
-          <small>Created at: {{ entry.created_at }}</small>
-          <small>Last updated: {{ entry.updated_at }}</small>
-          {% if entry.ai_analysis %}
-            <p>AI Analysis: {{ entry.ai_analysis }}</p>
-          {% endif %}
-        </li>
-        {% empty %}
-        <li class="no-entries">No entries yet.</li>
-        {% endfor %}
-      </ul>
-    </div>
+   
     <script src="{% static 'journal/js/dateAndTime.js' %}"></script>
     <script src="" async defer></script>
   </body>
