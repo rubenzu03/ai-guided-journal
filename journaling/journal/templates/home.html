@@ -34,16 +34,25 @@
     <div class="journal-form">
       <form method="post">
         {% csrf_token %}
-        <textarea id="journal-input"
+        <textarea
+          id="journal-input"
           name="text"
           placeholder="Write your journal entry..."
         ></textarea
         ><br />
-        <button id="submit_bt" type="submit">Save</button>
+        <div id="home_buttons">
+          <button id="submit_bt" class="button" type="submit">Save</button>
+          <button id="clear_bt" class="button" type="button">Clear</button>
+        </div>
+        <div id="status_message">
+          {% if status_message %}
+          <p>{{ status_message }}</p>
+          {% endif %}
+        </div>
       </form>
     </div>
-   
+
     <script src="{% static 'journal/js/dateAndTime.js' %}"></script>
-    <script src="" async defer></script>
+    <script src="{% static 'journal/js/clearTextArea.js' %}" async defer></script>
   </body>
 </html>
