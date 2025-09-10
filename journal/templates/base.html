@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{% block title %}AI Guided Journal{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'journal/css/home.css' %}" />
+  </head>
+  <body>
+    <div class="banner">
+      <h1 id="banner-title">AI Guided Journal</h1>
+      <img
+        id="dark-mode-icon"
+        src="{% static 'journal/icons/dark-mode.svg' %}"
+        alt="Dark Mode Icon"
+      />
+    </div>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{% static 'journal/js/dateAndTime.js' %}"></script>
+    <script src="{% static 'journal/js/clearTextArea.js' %}" async defer></script>
+
+  </body>
+</html>

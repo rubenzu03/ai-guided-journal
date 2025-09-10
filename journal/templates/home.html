@@ -4,25 +4,9 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-  <head>
-    {% load static %}
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>AI Guided Journal</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{% static 'journal/css/home.css' %}" />
-  </head>
-  <body>
-    <!--[if lt IE 7]>
-      <p class="browsehappy">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="#">upgrade your browser</a> to improve your experience.
-      </p>
-    <![endif]-->
-    <div class="banner">
-      <h1 id="banner-title">AI Guided Journal</h1>
-    </div>
+    {% extends "base.html" %}
+    {% block title %}Entries - AI Guided Journal{% endblock %}
+    {% block content %}
     <div class="currentDate">
       <h1 id="today-text" class="title">Today, it's:</h1>
       <h2 id="current-date">Date Placeholder</h2>
@@ -51,8 +35,6 @@
         </div>
       </form>
     </div>
+    {% endblock %}
 
-    <script src="{% static 'journal/js/dateAndTime.js' %}"></script>
-    <script src="{% static 'journal/js/clearTextArea.js' %}" async defer></script>
-  </body>
 </html>
