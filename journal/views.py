@@ -14,3 +14,7 @@ def home(request):
     entries = Entry.objects.all().order_by("-created_at")
     return render(request, "home.html", {"entries": entries})
 
+def entries(request):
+    entries = Entry.objects.all().order_by("-created_at")
+    return render(request, "entries.html", {"entries": entries})
+
