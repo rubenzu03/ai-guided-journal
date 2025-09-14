@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{% block title %}AI Guided Journal{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="stylesheet" href="{% static 'journal/css/base.css' %}" />
     {% block extra_css %}{% endblock %}
   </head>
@@ -21,11 +21,14 @@
         src="{% static 'journal/icons/dark-mode.svg' %}"
         alt="Dark Mode Icon"
       /> -->
-      <a id="entries-button" class="button" href="{% url 'entries' %}">View Entries</a>
     </div>
     <main>
         {% block content %}{% endblock %}
     </main>
+    <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+      <a class="bottom-nav__item" href="/">Home</a>
+      <a class="bottom-nav__item" href="{% url 'entries' %}">Entries</a>
+    </nav>
     <script src="{% static 'journal/js/dateAndTime.js' %}"></script>
     <script src="{% static 'journal/js/clearTextArea.js' %}" async defer></script>
 
