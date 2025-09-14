@@ -1,10 +1,8 @@
-const clearButton = document.getElementById('clear_bt');
+const clearButton = document.getElementById("clear_bt");
 
-clearButton.addEventListener('click', clearTextArea);
-
+clearButton.addEventListener("click", clearTextArea);
 
 function clearTextArea() {
-    const journalEntryTextArea = document.getElementById('journal-input');
-    journalEntryTextArea.value = '';
+  const journalEntryTextArea = document.getElementById("journal-input");
+  journalEntryTextArea.value = "";
 }
-

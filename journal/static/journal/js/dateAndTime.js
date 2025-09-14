@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   updateDateTime();
-  const msToNextSecond = 1000 - (new Date()).getMilliseconds();
+  const msToNextSecond = 1000 - new Date().getMilliseconds();
   setTimeout(() => {
     updateDateTime();
     setInterval(updateDateTime, 1000);
