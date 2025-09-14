@@ -4,26 +4,32 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-  {% extends "base.html" %}
-  {% block title %}Entries - AI Guided Journal{% endblock %}
-  {% block content %}
-    <div class="entries">
-      <h2>Previous Entries</h2>
-      <ul class="entries-list">
-        {% for entry in entries %}
-        <li class="entry">
-          <p>{{ entry.text }}</p>
+  {% extends "base.html" %} {% load static %} {% block title %}Entries - AI
+  Guided Journal{% endblock %} {% block extra_css %}
+  <link rel="stylesheet" href="{% static 'journal/css/entries.css' %}" />
+  {% endblock %} {% block content %}
+  <div class="entries">
+    <h2>Previous Entries</h2>
+    <ul class="entries-list">
+      {% for entry in entries %}
+      <li class="entry">
+        <p id="entry-text">{{ entry.text }}</p>
+        <div class="entry-metadata">
           <small>Created at: {{ entry.created_at }}</small>
           <small>Last updated: {{ entry.updated_at }}</small>
+        </div>
+        <br />
+        <div class="entry-ai-analysis">
           {% if entry.ai_analysis %}
           <p>AI Analysis: {{ entry.ai_analysis }}</p>
           {% endif %}
-        </li>
-        {% empty %}
-        <li class="no-entries">No entries yet.</li>
-        {% endfor %}
-      </ul>
-    </div>
+        </div>
+      </li>
+      {% empty %}
+      <li class="no-entries">No entries yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
   {% endblock %}
-    <script src="" async defer></script>
+  <script src="" async defer></script>
 </html>

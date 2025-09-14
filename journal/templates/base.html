@@ -10,21 +10,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{% block title %}AI Guided Journal{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{% static 'journal/css/home.css' %}" />
+    <link rel="stylesheet" href="{% static 'journal/css/base.css' %}" />
+    {% block extra_css %}{% endblock %}
   </head>
   <body>
     <div class="banner">
       <h1 id="banner-title">AI Guided Journal</h1>
-      <img
+      <!-- <img
         id="dark-mode-icon"
         src="{% static 'journal/icons/dark-mode.svg' %}"
         alt="Dark Mode Icon"
-      />
+      /> -->
+      <a id="entries-button" class="button" href="{% url 'entries' %}">View Entries</a>
     </div>
     <main>
         {% block content %}{% endblock %}
     </main>
-
     <script src="{% static 'journal/js/dateAndTime.js' %}"></script>
     <script src="{% static 'journal/js/clearTextArea.js' %}" async defer></script>
 

@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.banner {
+    position: sticky;
+    border-bottom: 0.1em solid rgb(146, 146, 146);
+    top: 0;
+    z-index: 1000;
+    background: #282828;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.8rem;
+    min-height: 5.5rem; 
+    width: 100%;
+    left: 0;      
+    right: 0;            
+    box-sizing: border-box;
+}
+#banner-title {
+    color: #65A17A;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+.button {
+    margin-top: 1rem;
+    background-color: #65A17A;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    border-color: transparent;
+    font-size: 1.05rem;
+}
+
+#entries-button {
+    margin-top: 0;
+    margin-right: 1rem;
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #6575A1;
+    color: white;
+    border-radius: 8px;
+    border-color: transparent;
+    font-size: 1.05rem;
+}
+
+@media (max-width: 600px) {
+    .banner {
+        padding: 0.5rem;
+    }
+
+    #banner-title {
+        font-size: 1.6rem;
+        margin: auto;
+        text-align: center;
+    }
+
+    #entries-button {
+        position: static;
+        transform: none;
+        margin-top: 0.5rem;
+        right: auto;
+    }
+
+}
+
+
+
+/* estados */
+.button:hover {
+    filter: brightness(0.75);
+}
