@@ -88,11 +88,12 @@ a {
   background: rgba(101,161,122,0.16);
 }
 
-.bottom-nav__item[aria-current="page"],
 .bottom-nav__item.active {
-  color: #65a17a;
-  background: rgba(101,161,122,0.14);
+  color: var(--nav-accent, #65a17a);
+  background: var(--nav-accent-bg, rgba(101,161,122,0.14));
 }
+
+
 
 
 @media (max-width: 600px) {
