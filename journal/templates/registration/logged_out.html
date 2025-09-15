@@ -1,0 +1,9 @@
+{% extends "base.html" %} {% load static %} {% block title %}Logged out - AI
+Guided Journal{% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'journal/css/entries.css' %}" />
+<div class="logout-container">
+  <h2>You have been logged out.</h2>
+  <p><a href="{% url 'login' %}">Log in again</a></p>
+  <p><a href="/">Go to home</a></p>
+</div>
+{% endblock %}
