@@ -2,7 +2,7 @@
 Journal{% endblock %} {% block content %}
 <link rel="stylesheet" href="{% static 'journal/css/registration/login.css' %}" />
 <div class="login-container">
-  <h2>Log in</h2>
+  <h2 id="login-title">Log in</h2>
   <form method="post">
     {% csrf_token %} {{ form.as_p }}
     <input type="hidden" name="next" value="{{ next }}" />
