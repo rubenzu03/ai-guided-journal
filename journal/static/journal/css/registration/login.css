@@ -1,0 +1,87 @@
+/* Shared auth container styles (centered) */
+.login-container,
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+  width: 90vw;
+  max-width: 420px;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.login-container form,
+.signup-container form {
+  width: 100%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea,
+select {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(2, 6, 23, 0.35);
+  transition: border-color 150ms ease, box-shadow 150ms ease,
+    transform 120ms ease;
+  font-size: 1rem;
+  line-height: 1.25;
+  resize: vertical;
+}
+
+#journal-input {
+  min-height: 180px;
+  max-height: 60vh;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #65a17a;
+  box-shadow: 0 8px 24px rgba(101, 161, 122, 0.12),
+    0 0 0 4px rgba(101, 161, 122, 0.06);
+  transform: translateY(-1px);
+}
+
+button.button {
+  background: linear-gradient(180deg, #6fbf8a 0%, #4ea268 100%);
+  color: #0b0b0b;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+}
+
+button.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(78, 162, 104, 0.12);
+}
+
+button.button:active {
+  transform: translateY(0);
+}
+
+.bottom-nav__item button {
+  color: inherit;
+  font: inherit;
+}
