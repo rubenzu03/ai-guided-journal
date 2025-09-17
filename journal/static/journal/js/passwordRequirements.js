@@ -18,6 +18,21 @@
       text: "A special character (like: !@#$%)",
       test: (s) => /[^A-Za-z0-9\s]/.test(s),
     },
+    {
+      key: "common",
+      text: "Not a commonly used password",
+      test: (s, input) => {
+        try {
+          if (!input) return true;
+          const val = input.getAttribute("data-common");
+          if (val === null || typeof val === "undefined" || val === "")
+            return true;
+          return String(val) !== "true";
+        } catch (e) {
+          return true;
+        }
+      },
+    },
   ];
 
   function buildRequirementsList() {
@@ -43,13 +58,12 @@
     });
     return ul;
   }
-  function updateRequirements(password) {
+  function updateRequirements(password, pwInput) {
     const ul = document.getElementById(REQUIREMENTS_ID);
     if (!ul) return;
     requirements.forEach((r) => {
       const li = ul.querySelector(`li[data-req-key="${r.key}"]`);
       if (!li) return;
-      const ok = r.test(password);
       const icon = li.querySelector(".pw-req-icon");
       if (ok) {
         li.classList.remove("unsatisfied");
@@ -86,12 +100,78 @@
       pwInput.insertAdjacentElement("afterend", reqList);
     }
 
-    updateRequirements(pwInput.value || "");
+    try {
+      const container = pwInput.closest("p") || pwInput.parentElement;
+      if (container) {
+        const text = container.innerText || "";
+        if (text.toLowerCase().includes("too common")) {
+          pwInput.setAttribute("data-common", "true");
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
 
-    pwInput.addEventListener("input", (e) =>
-      updateRequirements(e.target.value || "")
-    );
+    updateRequirements(pwInput.value || "", pwInput);
+
+    pwInput.addEventListener("input", (e) => {
+      try {
+        e.target.removeAttribute("data-common");
+      } catch (er) {}
+      updateRequirements(e.target.value || "", pwInput);
+      debounceServerCheck(e.target.value || "", pwInput);
+    });
   }
+
+  function debounce(fn, wait) {
+    let t = null;
+    return function (...args) {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(this, args), wait);
+    };
+  }
+
+  function getCookie(name) {
+    // From Django docs
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  async function serverCheck(password, pwInput) {
+    if (!pwInput) return;
+    try {
+      const resp = await fetch("/accounts/password-check/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken") || "",
+        },
+        body: JSON.stringify({ password }),
+        credentials: "same-origin",
+      });
+      if (!resp.ok) return;
+      const json = await resp.json();
+      if (json.too_common) {
+        pwInput.setAttribute("data-common", "true");
+      } else {
+        pwInput.removeAttribute("data-common");
+      }
+      updateRequirements(password || "", pwInput);
+    } catch (e) {
+    }
+  }
+
+  const debounceServerCheck = debounce(serverCheck, 300);
 
   init();
 })();

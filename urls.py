@@ -25,4 +25,5 @@ urlpatterns = [
     path('entries/', views.entries, name='entries'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', views.signup, name='signup'),
+    path('accounts/password-check/', views.password_check, name='password_check'),
 ]
