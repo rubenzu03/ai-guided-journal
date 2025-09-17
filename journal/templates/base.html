@@ -27,9 +27,9 @@
     </div>
     <main>{% block content %}{% endblock %}</main>
     <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+      {% if user.is_authenticated %}
       <a class="bottom-nav__item" href="/">Home</a>
       <a class="bottom-nav__item" href="{% url 'entries' %}">Entries</a>
-      {% if user.is_authenticated %}
       <span class="bottom-nav__item">Signed in as {{ user.username }}</span>
       <form method="post" action="{% url 'logout' %}" style="display: inline">
         {% csrf_token %}
