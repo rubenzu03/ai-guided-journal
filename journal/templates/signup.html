@@ -1,12 +1,19 @@
 {% extends "base.html" %} {% load static %} {% block title %}Sign up - AI Guided
 Journal{% endblock %} {% block content %}
-<link rel="stylesheet" href="{% static 'journal/css/registration/login.css' %}" />
+<link
+  rel="stylesheet"
+  href="{% static 'journal/css/registration/login.css' %}"
+/>
 <div class="signup-container">
   <h2>Create an account</h2>
   <form method="post">
-    {% csrf_token %} {{ form.as_p }}
+    {% csrf_token %} {{ form.non_field_errors }}
+    <p>{{ form.username.label_tag }} {{ form.username }}</p>
+    <p>{{ form.password1.label_tag }} {{ form.password1 }}</p>
+    <p>{{ form.password2.label_tag }} {{ form.password2 }}</p>
     <button type="submit" class="button">Sign up</button>
   </form>
   <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
 </div>
+<script src="{% static 'journal/js/passwordRequirements.js' %}"></script>
 {% endblock %}
