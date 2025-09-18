@@ -65,6 +65,15 @@
       const li = ul.querySelector(`li[data-req-key="${r.key}"]`);
       if (!li) return;
       const icon = li.querySelector(".pw-req-icon");
+      let ok = false;
+      try {
+        ok =
+          typeof r.test === "function"
+            ? r.test(password || "", pwInput)
+            : false;
+      } catch (e) {
+        ok = false;
+      }
       if (ok) {
         li.classList.remove("unsatisfied");
         li.classList.add("satisfied");
@@ -97,7 +106,9 @@
     let reqList = document.getElementById(REQUIREMENTS_ID);
     if (!reqList) {
       reqList = buildRequirementsList();
-      pwInput.insertAdjacentElement("afterend", reqList);
+      const container =
+        pwInput.closest("p") || pwInput.parentElement || pwInput;
+      container.insertAdjacentElement("afterend", reqList);
     }
 
     try {
@@ -112,14 +123,23 @@
       // ignore
     }
 
-    updateRequirements(pwInput.value || "", pwInput);
+    const form = pwInput.form || pwInput.closest("form");
+    const allPwFields = form
+      ? Array.from(form.querySelectorAll("input[type='password']"))
+      : [pwInput];
+    const mainPw = allPwFields[0] || pwInput;
 
-    pwInput.addEventListener("input", (e) => {
-      try {
-        e.target.removeAttribute("data-common");
-      } catch (er) {}
-      updateRequirements(e.target.value || "", pwInput);
-      debounceServerCheck(e.target.value || "", pwInput);
+    updateRequirements(mainPw.value || "", mainPw);
+
+  
+    allPwFields.forEach((field) => {
+      field.addEventListener("input", (e) => {
+        try {
+          mainPw.removeAttribute("data-common");
+        } catch (er) {}
+        updateRequirements(mainPw.value || "", mainPw);
+        debounceServerCheck(mainPw.value || "", mainPw);
+      });
     });
   }
 
@@ -167,8 +187,7 @@
         pwInput.removeAttribute("data-common");
       }
       updateRequirements(password || "", pwInput);
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   const debounceServerCheck = debounce(serverCheck, 300);
