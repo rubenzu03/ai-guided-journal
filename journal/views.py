@@ -10,13 +10,16 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 
 
+
 # Create your views here.
 
 @login_required
 def home(request):
     if request.method == "POST":
         text = request.POST.get("text")
-        ai_analysis = generate_ai_analysis(text)
+        ai_analysis = request.POST.get("ai_analysis")
+        if not ai_analysis:
+            ai_analysis = generate_ai_analysis(text)
         Entry.objects.create(text=text, ai_analysis=ai_analysis, owner=request.user)
         return redirect("home")
     entries = Entry.objects.filter(owner=request.user).order_by("-created_at")
@@ -63,4 +66,5 @@ def password_check(request):
         errors = [str(err) for err in exc.error_list]
         too_common = any((c == "password_too_common") or ("too common" in e.lower()) for c, e in zip(codes, errors))
         return JsonResponse({"valid": False, "errors": errors, "codes": codes, "too_common": too_common})
+
 

@@ -1,42 +1,40 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    {% extends "base.html" %}
-    {% block title %}Entries - AI Guided Journal{% endblock %}
-    {% load static %}
-    {% block content %}
-    <link rel="stylesheet" href="{% static 'journal/css/home.css' %}" />
-    <div class="currentDate">
-      <h1 id="today-text" class="title">Today, it's:</h1>
-      <h2 id="current-date">Date Placeholder</h2>
+{% extends "base.html" %} {% load static %} {% block title %}Entries - AI Guided
+Journal{% endblock %} {% block content %}
+<link rel="stylesheet" href="{% static 'journal/css/home.css' %}" />
+<div class="currentDate">
+  <h1 id="today-text" class="title">Today, it's:</h1>
+  <h2 id="current-date">Date Placeholder</h2>
+</div>
+<div class="currentTime">
+  <h3 class="title">Current Time:</h3>
+  <h3 id="current-time">Time Placeholder</h3>
+</div>
+<div class="journal-form">
+  <form id="journal-form" method="post">
+    {% csrf_token %}
+    <input type="hidden" id="ai-analysis-input" name="ai_analysis" value="" />
+    <textarea
+      id="journal-input"
+      name="text"
+      placeholder="Write your journal entry..."
+    ></textarea>
+    <br />
+    <div id="home_buttons">
+      <button id="submit_bt" class="button" type="button">Save</button>
+      <button id="clear_bt" class="button" type="button">Clear</button>
     </div>
-    <div class="currentTime">
-      <h3 class="title">Current Time:</h3>
-      <h3 id="current-time">Time Placeholder</h3>
+    <div id="status_message">
+      {% if status_message %}
+      <p>{{ status_message }}</p>
+      {% endif %}
     </div>
-    <div class="journal-form">
-      <form method="post">
-        {% csrf_token %}
-        <textarea
-          id="journal-input"
-          name="text"
-          placeholder="Write your journal entry..."
-        ></textarea
-        ><br />
-        <div id="home_buttons">
-          <button id="submit_bt" class="button" type="submit">Save</button>
-          <button id="clear_bt" class="button" type="button">Clear</button>
-        </div>
-        <div id="status_message">
-          {% if status_message %}
-          <p>{{ status_message }}</p>
-          {% endif %}
-        </div>
-      </form>
-    </div>
-    {% endblock %}
+  </form>
 
-</html>
+  <div id="analysis_area">
+    <h3>AI analysis (streaming):</h3>
+    <p id="ai-analysis"></p>
+  </div>
+</div>
+
+<script src="{% static 'journal/js/homeStreaming.js' %}"></script>
+{% endblock %}

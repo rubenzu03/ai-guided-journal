@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from journal import views
 from django.urls import include
-
+from journal import gemini_requests
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/signup/', views.signup, name='signup'),
     path('accounts/password-check/', views.password_check, name='password_check'),
+    path('entries/generate-analysis-stream/', gemini_requests.generate_analysis_stream, name='generate_analysis_stream'),
 ]
