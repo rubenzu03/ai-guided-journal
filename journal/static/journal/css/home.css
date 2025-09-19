@@ -60,6 +60,25 @@ textarea {
   margin-top: 1rem;
 }
 
+#analysis_area {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#analysis_area h3 {
+  color: #65a17a;
+  text-align: center;
+}
+
+#analysis_area p {
+  margin-top: 0.5rem;
+  color: #ffffff;
+  text-align: center;
+  max-width: 50%;
+}
 @media (max-width: 600px) {
   .journal-form {
     flex-direction: column;
@@ -84,5 +103,6 @@ textarea {
   html,
   body {
     overflow-x: hidden;
+    
   }
 }

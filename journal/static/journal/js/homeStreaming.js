@@ -1,5 +1,4 @@
 (function () {
-  // client-side streaming logic for AI analysis
   const submitBt = document.getElementById("submit_bt");
   const clearBt = document.getElementById("clear_bt");
   const input = document.getElementById("journal-input");
@@ -24,7 +23,6 @@
     submitBt.addEventListener("click", async function () {
       const text = input.value || "";
       aiP.textContent = "";
-      // disable save/clear to avoid concurrent actions while streaming
       try {
         submitBt.disabled = true;
       } catch (er) {}
@@ -57,12 +55,35 @@
         const CHAR_DELAY = 20; // ms per char
         const WORD_DELAY = 120; // ms per word
 
-        // Queue for incoming text chunks; renderer consumes this queue.
         let pendingText = "";
         let rendering = false;
 
         function sleep(ms) {
           return new Promise((res) => setTimeout(res, ms));
+        }
+
+        // throttled scroll helper: scroll to bottom at most once per `THROTTLE_MS`
+        const THROTTLE_MS = 100;
+        let lastScroll = 0;
+        function throttledScrollToBottom() {
+          const now = Date.now();
+          if (now - lastScroll < THROTTLE_MS) return;
+          lastScroll = now;
+          window.requestAnimationFrame(() => {
+            try {
+              const scrollTarget = Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight
+              );
+              window.scrollTo({ top: scrollTarget, behavior: "smooth" });
+            } catch (e) {
+              window.scrollTo(
+                0,
+                document.body.scrollHeight ||
+                  document.documentElement.scrollHeight
+              );
+            }
+          });
         }
 
         async function renderPending() {
@@ -71,27 +92,30 @@
           try {
             if (RENDER_MODE === "word") {
               while (pendingText.length > 0) {
-                // Extract next word (including following spaces)
                 const match = pendingText.match(/^(\S+)(\s*)/);
                 if (match) {
                   const word = match[1] + (match[2] || "");
                   aiP.textContent += word;
                   pendingText = pendingText.slice(word.length);
                   await sleep(WORD_DELAY);
+                  throttledScrollToBottom();
                 } else {
-                  // fallback: append first char
                   aiP.textContent += pendingText[0];
                   pendingText = pendingText.slice(1);
                   await sleep(CHAR_DELAY);
+                  throttledScrollToBottom();
                 }
               }
             } else {
-              // char mode
               while (pendingText.length > 0) {
                 aiP.textContent += pendingText[0];
                 pendingText = pendingText.slice(1);
                 await sleep(CHAR_DELAY);
+                if (aiP.textContent.length % 40 === 0) {
+                  throttledScrollToBottom();
+                }
               }
+              throttledScrollToBottom();
             }
           } finally {
             rendering = false;
@@ -102,14 +126,9 @@
           const { done, value } = await reader.read();
           if (done) break;
           const chunk = decoder.decode(value, { stream: true });
-          // Queue chunk for gradual rendering
           pendingText += chunk;
-          // Start the renderer if not already running
           renderPending();
         }
-
-        // Streaming finished. Wait for any pending renderer to flush.
-        // Simple loop to wait until pendingText is drained.
         while (rendering || pendingText.length > 0) {
           await sleep(50);
         }
@@ -118,7 +137,6 @@
           const aiInput = document.getElementById("ai-analysis-input");
           const form = document.getElementById("journal-form");
           const statusDiv = document.getElementById("status_message");
-          // Prepare payload: send as form-encoded so Django receives request.POST
           const url =
             form && form.action ? form.action : window.location.pathname;
           const payload = new URLSearchParams();
@@ -126,7 +144,6 @@
           payload.append("ai_analysis", aiP.textContent || "");
           payload.append("csrfmiddlewaretoken", getCookie("csrftoken") || "");
 
-          // send via fetch so the page is not navigated away or cleared
           const saveResp = await fetch(url, {
             method: "POST",
             headers: {
@@ -138,7 +155,6 @@
           });
 
           if (saveResp.ok) {
-            // show a small saved message but do not clear the inputs
             if (statusDiv) {
               statusDiv.innerHTML = "<p>Entry saved.</p>";
             }
@@ -151,7 +167,6 @@
           const statusDiv = document.getElementById("status_message");
           if (statusDiv) statusDiv.innerHTML = "<p>Error saving entry.</p>";
         } finally {
-          // Re-enable save/clear buttons
           try {
             submitBt.disabled = false;
           } catch (er) {}
