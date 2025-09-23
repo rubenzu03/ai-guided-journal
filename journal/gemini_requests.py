@@ -39,7 +39,7 @@ async def generate_analysis_stream(request):
         ):
             text = chunk.text or ''
             for line in text.splitlines(True):
-                yield f"data: {line}\n\n"
+                yield f"{line}\n\n"
 
     response = StreamingHttpResponse(event_stream(), content_type='text/event-stream; charset=utf-8')
     response['Cache-Control'] = 'no-cache'
