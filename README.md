@@ -26,7 +26,9 @@ docker compose down
 ## Screenshots
 ### Main page
 <img width="1707" height="880" alt="Main page" src="https://github.com/user-attachments/assets/b97df8ce-7f61-4c84-a3b8-b5bd69ad23dc" />
+
 ### Entries page
 <img width="1707" height="880" alt="Entries page" src="https://github.com/user-attachments/assets/1026968a-1d18-4321-89bc-a68a7138c6f0" />
+
 ### Login
 <img width="1707" height="880" alt="Login" src="https://github.com/user-attachments/assets/91147c80-dc0d-4ad8-a6b5-8c038251a260" />
