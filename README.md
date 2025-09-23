@@ -4,9 +4,9 @@ Ever felt like needing someone to tell you more about your day? Thanks to Google
 
 <img src="https://img.shields.io/badge/-Python-3776AB?logo=Python&logoColor=white"/> <img src="https://img.shields.io/badge/-Django-092E20?logo=django&logoColor=white"/>
 
-## Run with Docker (quick local test)
+## Run with Docker
 
-1. Copy `.env.example` to `.env` and adjust `SECRET_KEY', 'GEMINI_API_KEY' and `ALLOWED_HOSTS.
+1. Copy `.env.example` to `.env` and adjust `SECRET_KEY'`, `'GEMINI_API_KEY'` and `ALLOWED_HOSTS`.
 
 2. Build and start with docker-compose:
 
@@ -15,7 +15,7 @@ docker compose build --progress=plain
 docker compose up
 ```
 
-The app will be available at http://localhost:8000. This setup uses Uvicorn directly (no Gunicorn) to run the ASGI app.
+The app will be available at http://localhost:8000
 
 To stop and remove containers:
 
