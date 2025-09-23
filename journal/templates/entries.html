@@ -20,8 +20,11 @@
         </div>
         <br />
         <div class="entry-ai-analysis">
-          {% if entry.ai_analysis %}
-          <p>AI Analysis: {{ entry.ai_analysis }}</p>
+          {% if entry.ai_analysis_html %}
+            <p>AI Analysis: {{ entry.ai_analysis_html|safe }}</p>
+          {% elif entry.ai_analysis %}
+            {# Fallback for older records if rendering failed or dependencies missing #}
+            <p>AI Analysis: {{ entry.ai_analysis }}</p>
           {% endif %}
         </div>
       </li>

@@ -23,11 +23,21 @@ def home(request):
         Entry.objects.create(text=text, ai_analysis=ai_analysis, owner=request.user)
         return redirect("home")
     entries = Entry.objects.filter(owner=request.user).order_by("-created_at")
+
+    for entry in entries:
+        entry.ai_analysis_html = entry.render_ai_analysis()
+
     return render(request, "home.html", {"entries": entries})
 
 @login_required
 def entries(request):
     entries = Entry.objects.filter(owner=request.user).order_by("-created_at")
+    for entry in entries:
+        try:
+            entry.ai_analysis_html = entry.render_ai_analysis()
+        except Exception:
+            entry.ai_analysis_html = entry.ai_analysis or ""
+
     return render(request, "entries.html", {"entries": entries})
 
 

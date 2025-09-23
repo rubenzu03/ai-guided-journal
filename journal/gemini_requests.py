@@ -15,12 +15,6 @@ def generate_ai_analysis(entry_text):
     return response.text
 
 async def generate_analysis_stream(request):
-    """Async endpoint that streams AI analysis chunks as they arrive.
-
-    Expects POST JSON: { "text": "..." }
-    Returns a streaming response with chunked text (plain text). The client
-    should use fetch and read the response.body as a stream.
-    """
     if request.method != 'POST':
         return JsonResponse({'error': 'POST required'}, status=405)
 
@@ -39,7 +33,7 @@ async def generate_analysis_stream(request):
         ):
             text = chunk.text or ''
             for line in text.splitlines(True):
-                yield f"{line}\n\n"
+                yield f"{line}\n"
 
     response = StreamingHttpResponse(event_stream(), content_type='text/event-stream; charset=utf-8')
     response['Cache-Control'] = 'no-cache'
