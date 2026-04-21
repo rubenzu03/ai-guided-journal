@@ -1,7 +1,7 @@
 # Requirements inferred from project imports on 2025-09-10
 # Pin versions locally after installing (eg. `pip install -r requirements.txt` then `pip freeze > requirements.txt`)
 
-Django==5.2.12
+Django==5.2.13
 python-dotenv
 google-genai
 flake8
